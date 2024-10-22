@@ -3,10 +3,9 @@ from langchain.schema import Document
 
 # Initialize the Wikipedia object for English
 USER_AGENT = 'MyWikipediaExtractor/1.0 (luca_romaschi@gmail.com)'
-WIKI_LANGUAGE = 'it'
+WIKI_LANGUAGE = 'en'
 
 wiki = wikipediaapi.Wikipedia(language=WIKI_LANGUAGE, user_agent=USER_AGENT) 
-
 
 def extract_page_content(page_title):
     """Extracts the content of a Wikipedia page given its title."""

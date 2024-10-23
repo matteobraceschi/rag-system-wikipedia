@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from langchain.prompts import ChatPromptTemplate
 from langchain_chroma import Chroma
-from llm_models import HuggingFaceModel, OpenAIModel
+from llm_models import HuggingFaceModel, OpenAIModel, BARTModel
 
 
 CHROMA_PATH = "chroma"
@@ -55,9 +55,10 @@ def answer_question(query_text):
         huggingfacehub_api_token=huggingface_token,
         temperature=0.7
     )
-    hf_response = hf_model.generate_text(prompt)
+    response = hf_model.generate_text(prompt)
 
-    formatted_response = f"Response: {hf_response}\n"  # Access the generated text
+    #bart_model = BARTModel(model_name="facebook/bart-large")
+    #response = bart_model.generate_answer(prompt)
     
-    return formatted_response
+    return response
 

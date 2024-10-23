@@ -1,5 +1,6 @@
 import openai
 from langchain_huggingface import HuggingFaceEndpoint
+#from haystack.nodes import FARMReader
 
 """
 # Usage in another file
@@ -48,3 +49,15 @@ class OpenAIModel:
             temperature=self.temperature
         )
         return response['choices'][0]['message']['content']
+
+
+# BART Model Class using Haystack
+class BARTModel:
+    def __init__(self, model_name="facebook/bart-large"):
+        # Initialize the BART model from Haystack's FARMReader
+        self.model = FARMReader(model_name_or_path=model_name)
+
+    def generate_answer(self, question, documents=None):
+        # Generate an answer using Haystack's reader with the input question and documents
+        prediction = self.model.predict(question, documents)
+        return prediction["answers"][0].answer if prediction["answers"] else None

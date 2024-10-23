@@ -34,4 +34,15 @@ def evaluate_response(generated_response, correct_response):
     print(f"ROUGE-1: {scores['rouge1'].fmeasure:.4f}")
     print(f"ROUGE-2: {scores['rouge2'].fmeasure:.4f}")
     print(f"ROUGE-L: {scores['rougeL'].fmeasure:.4f}")
+    
+    # Prepare the results as a formatted string
+    evaluation_results = (
+        f"\nCorrect answer: {correct_response}\n\n\n"
+        f"BLEU Score: {bleu_score:.4f}\n\n"
+        f"ROUGE-1: {scores['rouge1'].fmeasure:.4f}\n\n"
+        f"ROUGE-2: {scores['rouge2'].fmeasure:.4f}\n\n"
+        f"ROUGE-L: {scores['rougeL'].fmeasure:.4f}"
+    )
+    
+    return evaluation_results
 

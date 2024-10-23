@@ -9,7 +9,7 @@ from llm_models import HuggingFaceModel, OpenAIModel, BARTModel
 CHROMA_PATH = "chroma"
 
 PROMPT_TEMPLATE = """
-Shortly answer the following question based on the provided context:
+Shortly answer the following question. You can use the provided context:
 
 {context}
 
@@ -44,7 +44,8 @@ def answer_question(query_text):
     # Search the DB
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
     if len(results) == 0 or results[0][1] < 0.4:
-        return "Unable to find matching results."
+        results = ""
+        print("Unable to find matching results.")
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)

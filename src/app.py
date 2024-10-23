@@ -25,37 +25,12 @@ correct_responses = [
 ]
 
 def main():
-    st.title("Olympic Trivia Chatbot")
+    st.title("Olympic GPT")
     st.write("Ask a question about the Olympics, and I will provide you with an answer!")
 
-    # Create a container for the button
-    button_container = st.container()
 
-    # Add CSS for the button styling
-    st.markdown("""
-        <style>
-            .small-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                padding: 5px 10px;
-                font-size: 12px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .small-button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Button to create the database
-    button_clicked = button_container.button("Create Database", key="create_db")
-
-    if button_clicked:
+    # Add a sidebar with a button to create the database
+    if st.sidebar.button("Create Database"):
         with st.spinner("Creating database..."):
             try:
                 generate_data_store()  # Call the function from database.py
@@ -65,7 +40,7 @@ def main():
 
     # Input field for user questions
     user_question = st.text_input("Type your question here:")
-    st.write(f"**Question:**\n {user_question}")
+    st.markdown(f"<span style='color:red;'>**Question:**\n\n</span> {user_question}", unsafe_allow_html=True)
 
     if user_question:
         # Check if the question is in the predefined list
@@ -73,14 +48,27 @@ def main():
             # Get the corresponding answer
             index = questions.index(user_question)
             response = answer_question(user_question)
-            st.write(f"**Response from the model:**\n {response}")
+            
+            # Create two columns
+            col1, col2 = st.columns([3, 1])  # Adjust the ratios for width if needed
+            
+            # Main response area
+            with col1:
+                st.markdown(f"<span style='color:red;'>**Response from the model:**</span>", unsafe_allow_html=True)
+                st.write(response)
+                
+                # Evaluate the response
+                evaluation_result = evaluate_response(response, correct_responses[index])
+            
+            # Evaluation area
+            with col2:
+                # Display evaluation in red
+                st.markdown(f"<span style='color:red;'>{evaluation_result}</span>", unsafe_allow_html=True)
 
-            # Evaluate the response
-            evaluation_result = evaluate_response(response, correct_responses[index])
-            st.write(f"**Evaluation:**\n {evaluation_result}")
         else:
             response = answer_question(user_question)
-            st.write(f"**Response from the model:**\n {response}")
+            st.markdown(f"<span style='color:red;'>**Response from the model:**</span>", unsafe_allow_html=True)
+            st.write(response)
     
 
 if __name__ == "__main__":

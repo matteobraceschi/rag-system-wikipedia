@@ -2,13 +2,13 @@ from retriever import answer_question
 
 def main():
     # Prompt the user for a question
-    question = input("\nPlease enter your question:\n\n")
+    question = input("\n--- Please enter your question:\n\n")
 
     # Call the answer_question function directly
     response = answer_question(question)
 
     # Display the response
-    print("\nResponse from the model:\n")
+    print("\n--- Response from the model:\n")
     print(response)
 
 if __name__ == "__main__":

@@ -53,7 +53,7 @@ def answer_question(query_text):
     hf_model = HuggingFaceModel(
         repo_id="gpt2",
         huggingfacehub_api_token=huggingface_token,
-        temperature=1.0
+        temperature=0.7
     )
     hf_response = hf_model.generate_text(prompt)
 

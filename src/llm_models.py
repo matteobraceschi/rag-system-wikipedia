@@ -1,5 +1,4 @@
 import openai
-from langchain_community.llms import HuggingFacePipeline
 from langchain_huggingface import HuggingFaceEndpoint
 
 """
@@ -49,12 +48,3 @@ class OpenAIModel:
             temperature=self.temperature
         )
         return response['choices'][0]['message']['content']
-
-    ## Initialize the model with explicit parameters
-    #model = HuggingFaceEndpoint(
-    #    repo_id="distilgpt2",
-    #    huggingfacehub_api_token=huggingface_token,
-    #    temperature=1
-    #)
-    ## Pass the prompt as a list
-    #response_text = model.generate([prompt])

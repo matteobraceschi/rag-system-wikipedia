@@ -39,11 +39,7 @@ Il sistema RAG combina due modelli fondamentali:
 
 Per valutare la precisione e l'efficacia del sistema, ho utilizzato metriche standard per i sistemi di Question Answering (QA) e RAG:
 
-1. **Metriche di recupero**:
-   - **Precision@k**: Verifica se il sistema recupera i passaggi più rilevanti tra le prime k risposte.
-   - **Recall**: Misura la capacità di trovare tutte le informazioni rilevanti.
-
-2. **Metriche di generazione**:
+**Metriche di generazione**:
    - **BLEU**: Confronta la somiglianza tra la risposta generata e una risposta ideale.
    - **ROUGE**: Misura la sovrapposizione di n-grammi tra la risposta generata e quella corretta.
    - **Valutazione umana**: È utile avere revisori umani per giudicare la qualità delle risposte generate.

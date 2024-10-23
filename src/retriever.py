@@ -1,10 +1,9 @@
-import argparse
 import os
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from langchain.prompts import ChatPromptTemplate
-from langchain_huggingface import HuggingFaceEndpoint
 from langchain_chroma import Chroma
+from llm_models import HuggingFaceModel, OpenAIModel
 
 
 CHROMA_PATH = "chroma"
@@ -30,18 +29,13 @@ class SentenceTransformerEmbedding:
     def embed_documents(self, documents):
         return self.model.encode(documents).tolist()  # Ensure it returns a list
 
-def main():
+
+def answer_question(query_text):
     # Load environment variables from .env file
     load_dotenv()
 
     # Access the API token
     huggingface_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-
-    # Create CLI
-    parser = argparse.ArgumentParser()
-    parser.add_argument("query_text", type=str, help="The query text.")
-    args = parser.parse_args()
-    query_text = args.query_text
 
     # Prepare the DB
     embedding_function = SentenceTransformerEmbedding('all-MiniLM-L6-v2')
@@ -50,29 +44,20 @@ def main():
     # Search the DB
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
     if len(results) == 0 or results[0][1] < 0.4:
-        print("Unable to find matching results.")
-        print(results[0][1])
-        return
-    print(results[0][1])
+        return "Unable to find matching results."
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=query_text)
-    print(prompt)
-    
-    # Initialize the model with explicit parameters
-    model = HuggingFaceEndpoint(
-        repo_id="distilgpt2",
+
+    hf_model = HuggingFaceModel(
+        repo_id="gpt2",
         huggingfacehub_api_token=huggingface_token,
-        temperature=1
+        temperature=1.0
     )
+    hf_response = hf_model.generate_text(prompt)
+
+    formatted_response = f"Response: {hf_response}\n"  # Access the generated text
     
-    # Pass the prompt as a list
-    response_text = model.generate([prompt])
+    return formatted_response
 
-    sources = [doc.metadata.get("source", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text.generations[0][0]}\nSources: {sources}"  # Access the first generated text
-    print(formatted_response)
-
-if __name__ == "__main__":
-    main()

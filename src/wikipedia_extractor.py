@@ -2,7 +2,7 @@ import wikipediaapi
 from langchain.schema import Document
 
 # Initialize the Wikipedia object for English
-USER_AGENT = 'MyWikipediaExtractor/1.0 (luca_romaschi@gmail.com)'
+USER_AGENT = 'MyWikipediaExtractor/1.0 (example@gmail.com)'
 WIKI_LANGUAGE = 'en'
 
 wiki = wikipediaapi.Wikipedia(language=WIKI_LANGUAGE, user_agent=USER_AGENT) 

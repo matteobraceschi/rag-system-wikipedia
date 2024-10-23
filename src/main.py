@@ -1,30 +1,30 @@
-from rag import ask_question, embedder
-from wikipedia_extractor import get_contents
-
+from retriever import answer_question
 
 def main():
+    # Prompt the user for a question
+    question = input("\nPlease enter your question:\n\n")
 
+    # Call the answer_question function directly
+    response = answer_question(question)
 
-    # Define example questions
-    questions = [
-        "Quale città ospitò i primi Giochi Olimpici estivi dell’età moderna? In che anno?",
-        "Quante volte i Giochi Olimpici estivi sono stati ospitati in Francia?",
-        "Quanto tempo è passato dall’ultima volta che Parigi ha ospitato le olimpiadi estive?",
-        "La prima edizione dei Giochi Olimpici invernali è avvenuta prima della prima edizione dei Giochi Olimpici estivi?",
-        "L’arrampicata sportiva non è uno sport olimpico: vero o falso?",
-        "Quale è il numero medio di ori olimpici per edizione per l’Italia?",
-        "Chi è l’ultima vincitrice dei 100 metri piani? Con quale tempo?"
-    ]
-
-    # Get content from Wikipedia
-    documents = get_contents(page_titles)
-    # Create a vector store from the extracted documents
-    vector_store = embedder(documents)
-
-    # Iterate through questions and get answers
-    for question in questions:
-        answer = ask_question(vector_store, question)
-        print(f"Q: {question}\nA: {answer}\n")
+    # Display the response
+    print("\nResponse from the model:\n")
+    print(response)
 
 if __name__ == "__main__":
     main()
+
+
+"""
+
+Which city hosted the first modern Summer Olympic Games? In what year?
+
+questions = [
+    "Which city hosted the first modern Summer Olympic Games? In what year?",
+    "How many times have the Summer Olympic Games been hosted in France?",
+    "How long has it been since Paris last hosted the Summer Olympics?",
+    "Did the first edition of the Winter Olympic Games take place before the first edition of the Summer Olympic Games?",
+    "Sport climbing is not an Olympic sport: true or false?",
+    "What is the average number of Olympic gold medals per edition for Italy?",
+    "Who is the most recent winner of the 100-meter sprint? With what time?"
+]"""

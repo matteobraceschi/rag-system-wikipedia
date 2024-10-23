@@ -1,10 +1,6 @@
 # RAG-system for Wikipedia
 
 
-Ecco come potresti descrivere il tuo lavoro riguardante la costruzione di un sistema di Retrieval-Augmented Generation (RAG):
-
----
-
 Per sviluppare un sistema di Retrieval-Augmented Generation (RAG) in grado di rispondere a domande utilizzando le informazioni estratte dalle pagine di Wikipedia, ho strutturato il processo in tre fasi principali: **estrazione delle informazioni**, **costruzione del sistema RAG**, e **valutazione del sistema**.
 
 ### 1. Estrazione delle informazioni

@@ -54,7 +54,7 @@ def main():
             
             # Main response area
             with col1:
-                st.markdown(f"<span style='color:red;'>**Response from the model:**</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='color:yellow;'>**Response from the model:**</span>", unsafe_allow_html=True)
                 st.write(response)
                 
                 # Evaluate the response
@@ -63,11 +63,12 @@ def main():
             # Evaluation area
             with col2:
                 # Display evaluation in red
-                st.markdown(f"<span style='color:red;'>{evaluation_result}</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='color:green;'>**EVALUATION:**</span>", unsafe_allow_html=True)
+                st.write(evaluation_result)
 
         else:
             response = answer_question(user_question)
-            st.markdown(f"<span style='color:red;'>**Response from the model:**</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color:yellow;'>**Response from the model:**</span>", unsafe_allow_html=True)
             st.write(response)
     
 

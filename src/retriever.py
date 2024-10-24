@@ -44,8 +44,7 @@ def answer_question(query_text):
     # Search the DB
     results = db.similarity_search_with_relevance_scores(query_text, k=3)
     if len(results) == 0 or results[0][1] < 0.4:
-        results = ""
-        print("Unable to find matching results.")
+        return "Unable to find matching results, you could try rephrasing the question or providing more context.\n\n Please note that the model is trained on a specific set of documents and may not have information on all topics."
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)

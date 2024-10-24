@@ -21,7 +21,7 @@ correct_responses = [
     "Yes, the first edition of the Winter Olympic Games took place in 1924, which was after the first modern Summer Olympic Games in 1896.",
     "False. Sport climbing was included as an Olympic sport in the 2020 Tokyo Olympics.",
     "Italy has won a total of 742 Olympic medals, of which 257 are gold. The average number of gold medals per edition is approximately 6.5.",
-    "The most recent winner of the 100-meter sprint is Christian Coleman, who won the gold medal at the 2022 World Athletics Championships with a time of 9.86 seconds."
+    "The most recent winner of the men's 100-meter sprint at the 2024 Olympics in Paris was Noah Lyles from the USA. He won the race with a time of 9.79 seconds."
 ]
 
 def main():

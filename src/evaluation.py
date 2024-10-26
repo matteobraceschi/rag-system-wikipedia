@@ -18,30 +18,44 @@ def evaluate_response(generated_response, correct_response):
     :param correct_response: correct answer
     :return: None
     """
-     
-    # Calculate BLEU
-    generated_tokens = simple_tokenize(generated_response)
-    correct_tokens = simple_tokenize(correct_response)
-    bleu_score = sentence_bleu([correct_tokens], generated_tokens)
+    # Truncate the generated response to the first sentence
+    truncated_response = generated_response.split('.')[0] + '.'
 
-    # Calculate ROUGE
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
-    scores = scorer.score(correct_response, generated_response)
+    # Calculate BLEU for full and truncated responses
+    generated_tokens = simple_tokenize(generated_response)
+    truncated_tokens = simple_tokenize(truncated_response)
+    correct_tokens = simple_tokenize(correct_response)
     
+    bleu_score_full = sentence_bleu([correct_tokens], generated_tokens)
+    bleu_score_truncated = sentence_bleu([correct_tokens], truncated_tokens)
+
+    # Calculate ROUGE for full and truncated responses
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+    rouge_full = scorer.score(correct_response, generated_response)
+    rouge_truncated = scorer.score(correct_response, truncated_response)
+
     # Print the results
     print(f"\nCorrect: {correct_response}\n")
-    print(f"BLEU Score: {bleu_score:.4f}")
-    print(f"ROUGE-1: {scores['rouge1'].fmeasure:.4f}")
-    print(f"ROUGE-2: {scores['rouge2'].fmeasure:.4f}")
-    print(f"ROUGE-L: {scores['rougeL'].fmeasure:.4f}")
-    
+    print(f"Full Generated Response BLEU Score: {bleu_score_full:.4f}")
+    print(f"Truncated Generated Response BLEU Score: {bleu_score_truncated:.4f}")
+    print(f"Full Generated ROUGE-1: {rouge_full['rouge1'].fmeasure:.4f}")
+    print(f"Truncated Generated ROUGE-1: {rouge_truncated['rouge1'].fmeasure:.4f}")
+    print(f"Full Generated ROUGE-2: {rouge_full['rouge2'].fmeasure:.4f}")
+    print(f"Truncated Generated ROUGE-2: {rouge_truncated['rouge2'].fmeasure:.4f}")
+    print(f"Full Generated ROUGE-L: {rouge_full['rougeL'].fmeasure:.4f}")
+    print(f"Truncated Generated ROUGE-L: {rouge_truncated['rougeL'].fmeasure:.4f}")
+
     # Prepare the results as a formatted string
     evaluation_results = (
-        f"\nCorrect answer: {correct_response}\n\n\n"
-        f"BLEU Score: {bleu_score:.4f}\n\n"
-        f"ROUGE-1: {scores['rouge1'].fmeasure:.4f}\n\n"
-        f"ROUGE-2: {scores['rouge2'].fmeasure:.4f}\n\n"
-        f"ROUGE-L: {scores['rougeL'].fmeasure:.4f}"
+        f"\nCorrect answer: {correct_response}\n\n"
+        f"BLEU Score on Full Response: {bleu_score_full:.4f}\n\n"
+        f"BLEU Score on Truncated Response : {bleu_score_truncated:.4f}\n\n"
+        f"ROUGE-1 on Full Response: {rouge_full['rouge1'].fmeasure:.4f}\n\n"
+        f"ROUGE-1 on Truncated Response: {rouge_truncated['rouge1'].fmeasure:.4f}\n\n"
+        f"ROUGE-2 on Full Response: {rouge_full['rouge2'].fmeasure:.4f}\n\n"
+        f"ROUGE-2 on Truncated Response: {rouge_truncated['rouge2'].fmeasure:.4f}\n\n"
+        f"ROUGE-L on Full Response: {rouge_full['rougeL'].fmeasure:.4f}\n\n"
+        f"ROUGE-L on Truncated Response: {rouge_truncated['rougeL'].fmeasure:.4f}"
     )
     
     return evaluation_results

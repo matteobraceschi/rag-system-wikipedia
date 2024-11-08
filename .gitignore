@@ -1,5 +1,16 @@
 # Ignore node_modules
 node_modules/
+
+# Ambiente virtuale
 venv/
+env/
+
+# Cache dei bytecode Python
+src/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# File di ambiente
 .env
 tech-task-ammagamma-llm.pdf

@@ -14,4 +14,5 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Imposta il comando per avviare l'applicazione
-CMD ["python", "app.py"]
+CMD ["streamlit", "run", "app.py", "--server.port=5000", "--server.address=0.0.0.0"]
+
